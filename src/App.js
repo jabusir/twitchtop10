@@ -9,8 +9,8 @@ class App extends Component {
       <div>
         <header>
         <h1>Welcome to Twitch's Top 10</h1>
-        <Data />
         </header>
+        <Data />                        
       </div>
     );
   }

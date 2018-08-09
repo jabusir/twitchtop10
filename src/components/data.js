@@ -17,8 +17,10 @@ export default class Data extends React.Component {
     
     getStreamerNameViews = async () => {
         if(this.state.user_id.length > 0){
+        const ids = this.state.user_id
+        const idsurl = 'id=' + ids.join('&id=');
         const response = await 
-        fetch(`https://api.twitch.tv/helix/users?id=${this.state.user_id}`, {
+        fetch(`https://api.twitch.tv/helix/users?${idsurl}`, {
             headers: {
                 'Client-ID': 's6t2wnpgws5z1dputa41o2xfhd5unr'
             }
@@ -60,4 +62,3 @@ export default class Data extends React.Component {
             }
     }
 };
-

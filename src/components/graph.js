@@ -5,7 +5,7 @@ import { VictoryChart, VictoryGroup, VictoryArea } from 'victory';
 
 export default class Graph extends React.Component {
     render() {
-        console.log(props.data.value);
+      console.log("ingraph:", this.props.data);
       return (
         <VictoryChart width={400} height={400}>
           <VictoryGroup
