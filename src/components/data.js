@@ -25,7 +25,7 @@ export default class Data extends React.Component {
         });
         const namePayload = await response.json();
         const nameData = namePayload.data;
-        return nameData;
+        this.setState(() => ({ data:nameData }));
 
         };
 
@@ -56,7 +56,7 @@ export default class Data extends React.Component {
                 })}
             </div>
             )} else {
-                return <Graph data={this.getStreamerNameViews()} />
+                return <Graph data={this.state.data} />
             }
     }
 };
