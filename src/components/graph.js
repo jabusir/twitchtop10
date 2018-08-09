@@ -1,53 +1,43 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { range, random } from 'lodash';
-import { VictoryBar, VictoryChart, VictoryTheme, VictoryStack, VictoryArea } from 'victory';
+import { VictoryChart, VictoryGroup, VictoryArea } from 'victory';
 
 
 
 export default class Graph extends React.Component {
-    constructor(props) {
-      super(props);
-      this.state = { data: this.getData() };
-    }
-  
-    componentDidMount() {
-      this.setStateInterval = window.setInterval(() => {
-        this.setState({ data: this.getData() });
-      }, 4000);
-    }
-  
-    getData() {
-      return range(7).map(() => {
-        return [
-          { x: 1, y: random(1, 5) },
-          { x: 2, y: random(1, 10) },
-          { x: 3, y: random(2, 10) },
-          { x: 4, y: random(2, 10) },
-          { x: 5, y: random(2, 15) }
-        ];
-      });
-    }
-  
     render() {
+        console.log(props.data.value);
       return (
-        <VictoryChart
-          theme={VictoryTheme.material}
-          animate={{ duration: 1000 }}
-        >
-          <VictoryStack
-            colorScale={"blue"}
+        <VictoryChart width={400} height={400}>
+          <VictoryGroup
+            style={{
+              data: { strokeWidth: 3, fillOpacity: 0.4 }
+            }}
           >
-            {this.state.data.map((data, i) => {
-              return (
-                <VictoryArea
-                  key={i}
-                  data={data}
-                  interpolation={"basis"}
-                />
-              );
-            })}
-          </VictoryStack>
+            <VictoryArea
+              style={{
+                data: { fill: "cyan", stroke: "cyan" }
+              }}
+              data={[
+                { x: 1, y: 2 },
+                { x: 2, y: 3 },
+                { x: 3, y: 5 },
+                { x: 4, y: 4 },
+                { x: 5, y: 7 }
+              ]}
+            />
+            <VictoryArea
+              style={{
+                data: { fill: "magenta", stroke: "magenta" }
+              }}
+              data={[
+                { x: 1, y: 3 },
+                { x: 2, y: 2 },
+                { x: 3, y: 6 },
+                { x: 4, y: 2 },
+                { x: 5, y: 6 }
+              ]}
+            />
+          </VictoryGroup>
         </VictoryChart>
       );
     }

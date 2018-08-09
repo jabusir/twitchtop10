@@ -57,7 +57,7 @@ export default class Data extends React.Component {
                 })}
             </div>
             )} else {
-                return <Graph getStreamerNameViews={this.getStreamerNameViews} />
+                return <Graph data={this.getStreamerNameViews()} />
             }
     }
 };
