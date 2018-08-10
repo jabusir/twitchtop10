@@ -12,7 +12,7 @@ export default class Data extends React.Component {
     
     gameSelected = (user_id) => {
         this.setState(() => ({ user_id: user_id }));
-        this.getStreamerNameViews();
+        setInterval(this.getStreamerNameViews, 2500);
     }
     
     getStreamerNameViews = async () => {
@@ -57,8 +57,10 @@ export default class Data extends React.Component {
                     return <GameCard key={game.id} {...game} gameSelected={this.gameSelected}/> 
                 })}
             </div>
-            )} else {
+            )} else if (this.state.data.length > 0 ) {
                 return <Graph data={this.state.data} />
+            } else {
+                return null
             }
     }
 };

@@ -1,45 +1,25 @@
 import React from 'react';
-import { VictoryChart, VictoryGroup, VictoryArea } from 'victory';
-
-
 
 export default class Graph extends React.Component {
-    render() {
-      console.log("ingraph:", this.props.data);
-      return (
-        <VictoryChart width={400} height={400}>
-          <VictoryGroup
-            style={{
-              data: { strokeWidth: 3, fillOpacity: 0.4 }
-            }}
-          >
-            <VictoryArea
-              style={{
-                data: { fill: "cyan", stroke: "cyan" }
-              }}
-              data={[
-                { x: 1, y: 2 },
-                { x: 2, y: 3 },
-                { x: 3, y: 5 },
-                { x: 4, y: 4 },
-                { x: 5, y: 7 }
-              ]}
-            />
-            <VictoryArea
-              style={{
-                data: { fill: "magenta", stroke: "magenta" }
-              }}
-              data={[
-                { x: 1, y: 3 },
-                { x: 2, y: 2 },
-                { x: 3, y: 6 },
-                { x: 4, y: 2 },
-                { x: 5, y: 6 }
-              ]}
-            />
-          </VictoryGroup>
-        </VictoryChart>
-      );
+  state = {
+    graphData: {}
+  }
+  componentWillReceiveProps(nextProps){
+    const nextState = {...this.state.graphData};
+    for (let i of nextProps.data){
+      nextState[i.display_name].push(i.view_count);
     }
   }
-  
+  componentDidMount(){
+    console.log(this.props.data);
+    const nextState = {};
+    for (let i of this.props.data){
+      nextState[i.display_name] = [i.view_count]
+    }
+    this.setState(() =>  ({graphData: nextState }));
+} 
+  render(){
+    console.log(this.state.graphData);
+    return <div>hala</div>
+  }
+}
