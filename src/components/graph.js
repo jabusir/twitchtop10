@@ -66,11 +66,11 @@ export default class Graph extends React.Component {
 
     return  (
       <XYPlot
-        width={300}
-        height={300}
+        width={500}
+        height={500}
         colorType="linear"
-        colorDomain={[0, 9]}
-        colorRange={['yellow', 'orange']}
+       colorDomain={[0, 9]}
+       colorRange={['purple', 'pink']}
         >
         <HorizontalGridLines />
         <VerticalGridLines />
@@ -85,5 +85,6 @@ export default class Graph extends React.Component {
           );
         }) }
     </XYPlot>
-);}
+    );
+  }
 }
