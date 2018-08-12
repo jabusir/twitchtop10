@@ -1,4 +1,12 @@
 import React from 'react';
+import {
+  XYPlot,
+  XAxis,
+  YAxis,
+  HorizontalGridLines,
+  VerticalGridLines,
+  LineSeries
+} from 'react-vis';
 
 export default class Graph extends React.Component {
   state = {
@@ -15,10 +23,23 @@ export default class Graph extends React.Component {
     for (let i of Object.values(this.props.data)) {
       nextState[i.displayName] = [i.views];
     }
-    this.setState(() =>  ({graphData: nextState }));
+    this.setState(() =>  ({ graphData: nextState }));
 } 
   render(){
     console.log(this.state.graphData);
-    return <div>hala</div>
-  }
+    return  (
+      <XYPlot
+        width={300}
+        height={300}
+        colorType="linear"
+        colorDomain={[0, 9]}
+        colorRange={['yellow', 'orange']}
+        >
+        <HorizontalGridLines />
+        <VerticalGridLines />
+        <XAxis />
+        <YAxis />
+        {this.state.graphData.map(props => <LineSeries {...props}/>)}
+    </XYPlot>
+);}
 }

@@ -13,7 +13,7 @@ export default class Data extends React.Component {
     
     selectGame = async (gameId) => {
         this.setState(() => ({ selectedGameId: gameId }));
-        setInterval(() => this.getGraphData(gameId), 4300);
+        setInterval(() => this.getGraphData(gameId), 5000);
     };
     
     getGraphData = async (gameId) => {
