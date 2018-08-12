@@ -6,7 +6,7 @@ const GameCard = (props) => {
     let img = props.box_art_url.replace('-{width}x{height}', '');
     return (
     <div>
-        <img onClick={() => {props.selectGame(props.id)}} src={img} alt={props.name} />
+        <img className='gameCard' onClick={() => {props.selectGame(props.id)}} src={img} alt={props.name} />
     </div>
 )};
 

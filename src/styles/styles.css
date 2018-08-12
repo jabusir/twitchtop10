@@ -1,4 +1,13 @@
 .header {
-  background: purple;
-  font-weight: bold;
-  border-bottom: 1px solid; }
+  text-align: center;
+  background-color: #483d8b;
+  color: white;
+  position: sticky; }
+
+.gameCard {
+  max-width: 500;
+  max-height: 500; }
+
+.gameCard__container {
+  display: flex;
+  flex-wrap: wrap; }

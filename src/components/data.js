@@ -70,13 +70,13 @@ export default class Data extends React.Component {
     render(){
         if (!this.state.selectedGameId) {
         return(
-            <div>
+            <div className='gameCard__container'>
                 {this.state.games.map((game) => {
                     return <GameCard key={game.id} {...game} selectGame={this.selectGame}/> 
                 })}
             </div>
             )} else if (Object.keys(this.state.streamers).length > 0) {
                 return <Graph data={this.state.streamers} />
-            } else return null;
+} else return null;
     }
 };
