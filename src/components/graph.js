@@ -8,25 +8,62 @@ import {
   LineSeries
 } from 'react-vis';
 
+function cloneGraphDataImmutably(graphData) {
+  const graphDataNext = {};
+  for (let i of Object.entries(graphData)) {
+    const displayName = i[0];
+    const data = i[1];
+    graphDataNext[displayName] = [...data];
+  }
+  return graphDataNext;
+}
+
+function addDataToGraphData(data, graphData) {
+  for (let i of Object.values(data)) {
+    const displayName = i.displayName;
+    const views = i.views;
+
+    if (graphData.hasOwnProperty(displayName) === false) {
+      graphData[displayName] = [];
+    }
+
+    const data = graphData[displayName];
+    graphData[displayName].push({
+      y: views,
+      x: data.length
+    });
+  }
+}
+
 export default class Graph extends React.Component {
   state = {
     graphData: {}
   }
   componentWillReceiveProps(nextProps){
-    const nextState = {...this.state.graphData};
-    for (let i of Object.values(nextProps.data)){
-      nextState[i.displayName].push(i.views);
-    }
+    const { graphData } = this.state;
+
+    const graphDataNext = cloneGraphDataImmutably(graphData);
+    addDataToGraphData(nextProps.data, graphDataNext);
+
+
+    this.setState(() => ({
+      graphData: graphDataNext
+    }));
   }
   componentDidMount(){
-    const nextState = {};
-    for (let i of Object.values(this.props.data)) {
-      nextState[i.displayName] = [i.views];
-    }
-    this.setState(() =>  ({ graphData: nextState }));
-} 
+      const graphDataNext = {};
+      addDataToGraphData(this.props.data, graphDataNext);
+
+      this.setState(() => ({
+        graphData: graphDataNext
+      }));
+  }
+
   render(){
-    console.log(this.state.graphData);
+    const { graphData } = this.state;
+
+    console.log('Object.entries(graphData):', Object.entries(graphData));
+
     return  (
       <XYPlot
         width={300}
@@ -39,7 +76,14 @@ export default class Graph extends React.Component {
         <VerticalGridLines />
         <XAxis />
         <YAxis />
-        {this.state.graphData.map(props => <LineSeries {...props}/>)}
+        { Object.entries(graphData).map(entry => {
+          const displayName = entry[0];
+          const data = entry[1];
+          console.log('displayName:', displayName, 'data:', data);
+          return (
+            <LineSeries key={displayName} data={data} />
+          );
+        }) }
     </XYPlot>
 );}
 }
