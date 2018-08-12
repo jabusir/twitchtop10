@@ -5,8 +5,8 @@
   position: sticky; }
 
 .gameCard {
-  max-width: 500;
-  max-height: 500; }
+  max-width: 350;
+  max-height: 350; }
 
 .gameCard__container {
   display: flex;
