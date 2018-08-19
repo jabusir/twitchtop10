@@ -1,12 +1,6 @@
 import React from 'react';
-import {
-  XYPlot,
-  XAxis,
-  YAxis,
-  HorizontalGridLines,
-  VerticalGridLines,
-  LineSeries
-} from 'react-vis';
+import SmoothieComponent from 'react-smoothie';
+ 
 
 function cloneGraphDataImmutably(graphData) {
   const graphDataNext = {};
@@ -29,8 +23,7 @@ function addDataToGraphData(data, graphData) {
 
     const data = graphData[displayName];
     graphData[displayName].push({
-      y: views,
-      x: data.length
+      views: views,
     });
   }
 }
@@ -57,34 +50,43 @@ export default class Graph extends React.Component {
       this.setState(() => ({
         graphData: graphDataNext
       }));
+
+    const first = this.refs.chart.addTimeSeries({},{ strokeStyle: 'rgba(0, 255, 0, 1)', fillStyle: 'rgba(0, 255, 0, 0.2)', lineWidth: 4 });
+    const second = this.refs.chart.addTimeSeries({},{ strokeStyle: 'rgba(255, 0, 0, 1)', fillStyle: 'rgba(255, 0, 0, 0.2)', lineWidth: 4 });
+    const third = this.refs.chart.addTimeSeries({},{ strokeStyle: 'rgba(255, 0, 0, 1)', fillStyle: 'rgba(255, 0, 0, 0.2)', lineWidth: 4 });
+    const fourth = this.refs.chart.addTimeSeries({},{ strokeStyle: 'rgba(255, 0, 0, 1)', fillStyle: 'rgba(255, 0, 0, 0.2)', lineWidth: 4 });
+    const fifth = this.refs.chart.addTimeSeries({},{ strokeStyle: 'rgba(255, 0, 0, 1)', fillStyle: 'rgba(255, 0, 0, 0.2)', lineWidth: 4 });
+    const sixth = this.refs.chart.addTimeSeries({},{ strokeStyle: 'rgba(255, 0, 0, 1)', fillStyle: 'rgba(255, 0, 0, 0.2)', lineWidth: 4 });
+    const seventh = this.refs.chart.addTimeSeries({},{ strokeStyle: 'rgba(255, 0, 0, 1)', fillStyle: 'rgba(255, 0, 0, 0.2)', lineWidth: 4 });
+    const eigth = this.refs.chart.addTimeSeries({},{ strokeStyle: 'rgba(255, 0, 0, 1)', fillStyle: 'rgba(255, 0, 0, 0.2)', lineWidth: 4 });
+    const ninth = this.refs.chart.addTimeSeries({},{ strokeStyle: 'rgba(255, 0, 0, 1)', fillStyle: 'rgba(255, 0, 0, 0.2)', lineWidth: 4 });
+    const tenth = this.refs.chart.addTimeSeries({},{ strokeStyle: 'rgba(255, 0, 0, 1)', fillStyle: 'rgba(255, 0, 0, 0.2)', lineWidth: 4 });
+   
+      this.dataGenerator = setInterval(() => {
+        const time = new Date().getTime();
+        first.append(time, this.props.data[Object.keys(this.props.data)[0]].views);
+        second.append(time, this.props.data[Object.keys(this.props.data)[1]].views);
+        third.append(time, this.props.data[Object.keys(this.props.data)[2]].views);
+        fourth.append(time, this.props.data[Object.keys(this.props.data)[3]].views);
+        fifth.append(time, this.props.data[Object.keys(this.props.data)[4]].views);
+        sixth.append(time, this.props.data[Object.keys(this.props.data)[5]].views);
+        seventh.append(time, this.props.data[Object.keys(this.props.data)[6]].views);
+        eigth.append(time, this.props.data[Object.keys(this.props.data)[7]].views);
+        ninth.append(time, this.props.data[Object.keys(this.props.data)[8]].views);
+        tenth.append(time, this.props.data[Object.keys(this.props.data)[9]].views);
+        
+      }, 500);
   }
 
   render(){
-    const { graphData } = this.state;
-
-    console.log('Object.entries(graphData):', Object.entries(graphData));
-
+    console.log('line: ', this.props.data[Object.keys(this.props.data)[0]]);
     return  (
-      <XYPlot
-        width={500}
-        height={500}
-        colorType="linear"
-       colorDomain={[0, 9]}
-       colorRange={['purple', 'pink']}
-        >
-        <HorizontalGridLines />
-        <VerticalGridLines />
-        <XAxis />
-        <YAxis />
-        { Object.entries(graphData).map(entry => {
-          const displayName = entry[0];
-          const data = entry[1];
-          console.log('displayName:', displayName, 'data:', data);
-          return (
-            <LineSeries key={displayName} data={data} />
-          );
-        }) }
-    </XYPlot>
+      <SmoothieComponent ref="chart" width="1000" height="1000" />
     );
   }
 }
+
+
+
+ 
+
