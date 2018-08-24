@@ -12,9 +12,16 @@ export default class Graph extends React.Component {
     const { data } = nextProps;
     const nextState = {};
     for (let key of Object.keys(data)) {
-      nextState[key] = {
-        ...this.state.graphData[key],
-        viewList: [...this.state.graphData[key].viewList, data[key].views]
+      if (data.hasOwnProperty(key)) {
+        nextState[key] = {
+          ...this.state.graphData[key],
+          viewList: [...this.state.graphData[key].viewList, data[key].views]
+        }
+      } else {
+        nextState[key] = {
+          displayName: data[key].displayName,
+          viewList: [ data[key].views ]
+        }
       }
     }
     this.setState(() => ({graphData: nextState}));
