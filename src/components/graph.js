@@ -1,31 +1,7 @@
 import React from 'react';
  
 
-function cloneGraphDataImmutably(graphData) {
-  const graphDataNext = {};
-  for (let i of Object.entries(graphData)) {
-    const displayName = i[0];
-    const data = i[1];
-    graphDataNext[displayName] = [...data];
-  }
-  return graphDataNext;
-}
 
-function addDataToGraphData(data, graphData) {
-  for (let i of Object.values(data)) {
-    const displayName = i.displayName;
-    const views = i.views;
-
-    if (graphData.hasOwnProperty(displayName) === false) {
-      graphData[displayName] = [];
-    }
-
-    const data = graphData[displayName];
-    graphData[displayName].push({
-      views: views,
-    });
-  }
-}
 
 export default class Graph extends React.Component {
   state = {
@@ -33,29 +9,33 @@ export default class Graph extends React.Component {
   }
 
   componentWillReceiveProps(nextProps){
-    const { graphData } = this.state;
-
-    const graphDataNext = cloneGraphDataImmutably(graphData);
-    addDataToGraphData(nextProps.data, graphDataNext);
-
-
-    this.setState(() => ({
-      graphData: graphDataNext
-    }));
+    const { data } = nextProps;
+    const nextState = {};
+    for (let key of Object.keys(data)) {
+      nextState[key] = {
+        ...this.state.graphData[key],
+        viewList: [...this.state.graphData[key].viewList, data[key].views]
+      }
+    }
+    this.setState(() => ({graphData: nextState}));
   }
+
   componentDidMount(){
-      const graphDataNext = {};
-      addDataToGraphData(this.props.data, graphDataNext);
-
-      this.setState(() => ({
-        graphData: graphDataNext
-      }));
-
+    const initialState = {}; 
+    const { data } = this.props;
+    for (let key of Object.keys(data)) {
+      const temp = {
+        displayName: data[key].displayName,
+        viewList: [data[key].views],
+      }
+      initialState[key] = temp;
+    }
+    this.setState(() => ({graphData: initialState}));
   }
+
 
   render(){
-    console.log('this.props.data: ', this.props.data);
-    console.log('object.keys: ', Object.keys(this.props.data));
+    console.log(this.state.graphData);
     return  (
       <div></div>
     );
