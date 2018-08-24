@@ -1,11 +1,11 @@
 import React from 'react';
+import {VictoryChart, VictoryLine} from 'victory';
  
-
-
 
 export default class Graph extends React.Component {
   state = {
-    graphData: {}
+    graphData: {},
+    seconds: 0,
   }
 
   componentWillReceiveProps(nextProps){
@@ -24,7 +24,10 @@ export default class Graph extends React.Component {
         }
       }
     }
-    this.setState(() => ({graphData: nextState}));
+    this.setState((prevState) => ({
+      graphData: nextState,
+      seconds: prevState.seconds++
+    }));
   }
 
   componentDidMount(){
@@ -44,7 +47,22 @@ export default class Graph extends React.Component {
   render(){
     console.log(this.state.graphData);
     return  (
-      <div></div>
+      <div>
+      <VictoryChart width={600} height={470} scale={{ x: "time" }}
+        >
+            
+            {Object.values(this.state.graphData).map(streamer => (
+              <VictoryLine 
+                data={streamer.viewList.map((point) => ({x: this.state.seconds, y: point}) )}
+              />
+            ))}
+               
+
+
+          </VictoryChart>
+         
+
+      </div>
     );
   }
 }
