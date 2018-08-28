@@ -12,7 +12,7 @@ export default class Graph extends React.Component {
     const { data } = nextProps;
     const nextState = {};
     for (let key of Object.keys(data)) {
-      if (data.hasOwnProperty(key)) {
+      if (this.state.graphData.hasOwnProperty(key)) {
         nextState[key] = {
           ...this.state.graphData[key],
           viewList: [...this.state.graphData[key].viewList, data[key].views]
@@ -26,7 +26,7 @@ export default class Graph extends React.Component {
     }
     this.setState((prevState) => ({
       graphData: nextState,
-      seconds: prevState.seconds++
+      seconds: prevState.seconds + 1,
     }));
   }
 
@@ -45,15 +45,19 @@ export default class Graph extends React.Component {
 
 
   render(){
-    console.log(this.state.graphData);
     return  (
       <div>
-      <VictoryChart width={600} height={470} scale={{ x: "time" }}
+      <VictoryChart 
+        width={250} 
+        height={250} 
+        scale={{ x: "time" }}
+        domain={{ x: [0, 120], y: [0, 50000] }}
+        domainPadding={20}
         >
             
             {Object.values(this.state.graphData).map(streamer => (
               <VictoryLine 
-                data={streamer.viewList.map((point) => ({x: this.state.seconds, y: point}) )}
+                data={streamer.viewList.map((point) => ( console.log({ x: this.state.seconds, y: point })) )}
               />
             ))}
                

@@ -1,27 +1,29 @@
 .header {
   text-align: center;
-  background-color: #6441a5;
+  background-color: #483d8b;
   color: white;
-  position: sticky; 
-}
+  position: sticky;
+  font-family: 'Sarpanch', sans-serif;
+  margin-top: 0; }
 
 .gameCard {
   max-width: 350px;
   max-height: 350px;
-  margin: 10px;  
+  margin: 10px;
   /* box-shadow: 0 1px 10px rgba(151, 1, 151, 0.63); */
   box-shadow: 0 1px 15px #6441a5;
   border-radius: 10px;
   cursor: pointer;
-  transition: transform 300ms ease-in-out;
-}
+  transition: transform 300ms ease-in-out; }
 
 .gameCard:hover {
-  transform: scale(1.05);
-}
+  transform: scale(1.05); }
 
 .gameCard__container {
   display: flex;
-  flex-wrap: wrap; 
-  justify-content: center;
-}
+  flex-wrap: wrap;
+  justify-content: center; }
+
+html, body {
+  margin: 0;
+  padding: 0; }
